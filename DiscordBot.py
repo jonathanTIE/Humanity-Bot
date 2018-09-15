@@ -1,6 +1,4 @@
-"""Discord bot :
-https://boostlog.io/@anshulc95/how-to-host-a-discord-bot-on-heroku-for-free-5a9c230798a8b60096c43336
-"""
+
 import os
 import ImageLogo
 import asyncio
