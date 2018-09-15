@@ -33,13 +33,14 @@ async def on_message(message):
 	#Commande d'aide :
 	if re.match("!HMT help", message.content):
 		await CLIENT.send_message(message.channel, 
-		content=""" **ATTENTION : HEBERGEMENT NON EFFECTUE, LE BOT PEUT ETRE DOWN**
+		content=""" 
 ```Pour obtenir votre logo, merci d'utiliser la commande au format suivant : 
 !HMT %CouleurDuPseudo %Background %VotrePseudo 
 Avec la couleur du pseudo pouvant être R6, OW, CS, white ou un code rgb : '(255,255,255)' par exemple(sans les ')
 Le background doit être obligatoiremement soit R6,OW,CS ou NEUTRE (la version moitié R6 moitié OW)
 Le pseudo normalement pas de contrainte mais si un charactére spécial passe pas j'aurais certainement la flemme de le supporter ^^
-Pour le code source :
+Pour le code source : https://github.com/jonathanTIE/Humanity-Bot
+Le bot est hébergé sur Heroku
 Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathanTIE#4813)
 		``` """) 
 		
