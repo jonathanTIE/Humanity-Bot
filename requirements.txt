@@ -1,4 +1,4 @@
 discord.py>=0.16,<0.16.13
 aiohttp>=1.0.0,<1.1.0
 websockets>=3.1,<4.0
-PIL>=1.1.7,<1.1.8
+pillow>=5.0,<5.9
