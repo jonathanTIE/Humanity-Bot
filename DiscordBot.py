@@ -29,7 +29,7 @@ async def on_message(message):
 			await CLIENT.send_message(message.channel,
 		content=Result)
 	#Commande d'aide :
-	if re.match("!HMT help", message.content):
+	if re.match("!(HMT|hmt) help", message.content):
 		await CLIENT.send_message(message.channel, 
 		content=""" 
 ```Pour obtenir votre logo, merci d'utiliser la commande au format suivant : 
