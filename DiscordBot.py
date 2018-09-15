@@ -39,7 +39,7 @@ async def on_message(message):
 Avec la couleur du pseudo pouvant être R6, OW, CS, white ou un code rgb : '(255,255,255)' par exemple(sans les ')
 Le background doit être obligatoiremement soit R6,OW,CS ou NEUTRE (la version moitié R6 moitié OW)
 Le pseudo normalement pas de contrainte mais si un charactére spécial passe pas j'aurais certainement la flemme de le supporter ^^
-Pour le code source : https://github.com/jonathanTIE/Humanity-Bot
+Pour le code source : https://github.com/jonathanTIE/Humanity-Bot (svp le regardez pas)
 Le bot est hébergé sur Heroku
 Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathanTIE#4813)
 		``` """) 
