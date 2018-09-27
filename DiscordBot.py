@@ -15,6 +15,8 @@ CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
 LIST_NOTIF_CHANNEL = [x for x in os.environ.get('LIST_CHECKING_CHANNEL').split("|")]
 CHANNEL_FOR_NOTIF = os.environ.get('NOTIFICATION_CHANNEL')
+print(LIST_NOTIF_CHANNEL)
+print(CHANNEL_FOR_NOTIF)
 
 @CLIENT.event
 async def on_message(message):
