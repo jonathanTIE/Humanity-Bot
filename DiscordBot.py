@@ -13,6 +13,9 @@ logging.basicConfig(level=logging.INFO)
 #Bot ID = 481506421670674461
 CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
+LIST_NOTIF_CHANNEL = [for x in os.environ.get('LIST_CHECKING_CHANNEL').split(" ")]
+CHANNEL_FOR_NOTIF = os.environ.get('NOTIFICATION_CHANNEL')
+
 @CLIENT.event
 async def on_message(message):
 	Result = ''
@@ -29,9 +32,9 @@ async def on_message(message):
 			await CLIENT.send_message(message.channel,
 		content=Result)
 	#Commande d'aide :
-	if re.match("!(HMT|hmt) help", message.content):
+	if re.match("!HMT help", message.content):
 		await CLIENT.send_message(message.channel, 
-		content=""" 
+		content="""
 ```Pour obtenir votre logo, merci d'utiliser la commande au format suivant : 
 !HMT %CouleurDuPseudo %Background %VotrePseudo 
 Avec la couleur du pseudo pouvant être R6, OW, CS, white ou un code rgb : '(255,255,255)' par exemple(sans les ')
@@ -41,5 +44,33 @@ Pour le code source : https://github.com/jonathanTIE/Humanity-Bot (svp le regard
 Le bot est hébergé sur Heroku
 Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathanTIE#4813)
 		``` """) 
+		
+async def on_ready():
+	global CHANNEL_FOR_NOTIF
+	for x in CLIENT.get_all_channels():
+		for y in LIST_NOTIF_CHANNEL:
+			if str(x) == str(y):
+				LIST_NOTIF_CHANNEL[LIST_NOTIF_CHANNEL.index(y)] = x.id
+		if str(x) == str(CHANNEL_FOR_NOTIF):
+			CHANNEL_FOR_NOTIF = x
+	CLIENT.loop.create_task(infinite_check())
+				
+@CLIENT.event
+async def infinite_check():
+	CurVoiceMembers = []
+	while True:
+		for idChannel in LIST_NOTIF_CHANNEL:
+			voiceMembers = CLIENT.get_channel(idChannel).voice_members
+			if  voiceMembers and CurVoiceMembers != voiceMembers:
+				CurChannel = CLIENT.get_channel(idChannel)
+				await CLIENT.send_message(CHANNEL_FOR_NOTIF,
+				content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
+				CurChannel.name, str([x.name for x in CurChannel.voice_members])))
+				CurVoiceMembers = voiceMembers
+			elif not voiceMembers:
+				CurVoiceMembers = []
+			else:
+				print(CLIENT.get_channel(idChannel).voice_members)
+		await asyncio.sleep(1)
 		
 CLIENT.run(TOKEN)
