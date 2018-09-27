@@ -13,8 +13,8 @@ logging.basicConfig(level=logging.INFO)
 #Bot ID = 481506421670674461
 CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
-LIST_NOTIF_CHANNEL = ["⏳Attente staff⏳"]
-CHANNEL_FOR_NOTIF = "🔧commandes🔧"
+LIST_NOTIF_CHANNEL = ["General"]
+CHANNEL_FOR_NOTIF = "strats"
 
 @CLIENT.event
 async def on_message(message):
