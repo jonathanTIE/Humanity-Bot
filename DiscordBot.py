@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 #Bot ID = 481506421670674461
 CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
-LIST_NOTIF_CHANNEL = [for x in os.environ.get('LIST_CHECKING_CHANNEL').split(" ")]
+LIST_NOTIF_CHANNEL = [x for x in os.environ.get('LIST_CHECKING_CHANNEL').split(" ")]
 CHANNEL_FOR_NOTIF = os.environ.get('NOTIFICATION_CHANNEL')
 
 @CLIENT.event
