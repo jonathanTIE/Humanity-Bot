@@ -44,7 +44,7 @@ Pour le code source : https://github.com/jonathanTIE/Humanity-Bot (svp le regard
 Le bot est hébergé sur Heroku
 Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathanTIE#4813)
 		``` """) 
-		
+@CLIENT.event		
 async def on_ready():
 	global CHANNEL_FOR_NOTIF
 	for x in CLIENT.get_all_channels():
