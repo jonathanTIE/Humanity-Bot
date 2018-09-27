@@ -53,6 +53,8 @@ async def on_ready():
 				LIST_NOTIF_CHANNEL[LIST_NOTIF_CHANNEL.index(y)] = x.id
 		if str(x) == str(CHANNEL_FOR_NOTIF):
 			CHANNEL_FOR_NOTIF = x
+	print(CHANNEL_FOR_NOTIF)
+	print(LIST_NOTIF_CHANNEL)
 	CLIENT.loop.create_task(infinite_check())
 				
 @CLIENT.event
@@ -62,6 +64,7 @@ async def infinite_check():
 		for idChannel in LIST_NOTIF_CHANNEL:
 			voiceMembers = CLIENT.get_channel(idChannel).voice_members
 			if  voiceMembers and CurVoiceMembers != voiceMembers:
+				print("Found someone in channel")
 				CurChannel = CLIENT.get_channel(idChannel)
 				await CLIENT.send_message(CHANNEL_FOR_NOTIF,
 				content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
