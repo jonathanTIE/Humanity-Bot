@@ -58,7 +58,7 @@ async def on_ready():
 @CLIENT.event
 async def infinite_check():
 	CurVoiceMembers = []
-	print(CLIENT.get_channel(LIST_NOTIF_CHANNEL))
+	print(CLIENT.get_channel(LIST_NOTIF_CHANNEL[0]))
 	while True:
 		for idChannel in LIST_NOTIF_CHANNEL:
 			voiceMembers = CLIENT.get_channel(idChannel).voice_members
