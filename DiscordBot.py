@@ -58,8 +58,8 @@ async def on_ready():
 @CLIENT.event
 async def infinite_check():
 	CurVoiceMembers = []
+	print(LIST_NOTIF_CHANNEL)
 	while True:
-		print(CurVoiceMembers)
 		for idChannel in LIST_NOTIF_CHANNEL:
 			voiceMembers = CLIENT.get_channel(idChannel).voice_members
 			if  voiceMembers and CurVoiceMembers != voiceMembers:
