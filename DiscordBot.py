@@ -74,7 +74,7 @@ async def infinite_check():
 				voiceMembers = ChannelToCheck.voice_members
 				if  voiceMembers and CurVoiceMembers[ChannelToCheck] != voiceMembers:
 					await CLIENT.send_message(ChannelForNotification,
-					content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
+					content="<:alerte:459763877949734924> Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here <:alerte:459763877949734924>".format(
 					ChannelToCheck.name, str([x.name for x in ChannelToCheck.voice_members])))
 					CurVoiceMembers[ChannelToCheck] = voiceMembers
 				elif not voiceMembers:
