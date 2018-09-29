@@ -75,8 +75,6 @@ async def infinite_check():
 				except KeyError:
 					CurVoiceMembers[ChannelToCheck] = []
 				voiceMembers = ChannelToCheck.voice_members
-				print(voiceMembers)
-				print(CurVoiceMembers[ChannelToCheck])
 				if voiceMembers and CurVoiceMembers[ChannelToCheck] != voiceMembers:
 					await CLIENT.send_message(ChannelForNotification,
 					content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
