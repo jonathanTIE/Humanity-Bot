@@ -66,6 +66,9 @@ async def infinite_check():
 	CurVoiceMembers = []
 	global DICT_SERVER_CHANNEL
 	print(DICT_SERVER_CHANNEL)
+	for x in DICT_SERVER_CHANNEL:
+		print(DICT_SERVER_CHANNEL[x][0][0].name)
+		print(DICT_SERVER_CHANNEL[x][1].name)
 	while True:
 		for server in DICT_SERVER_CHANNEL:
 			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
