@@ -64,7 +64,7 @@ async def on_ready():
 				
 @CLIENT.event
 async def infinite_check():
-	CurVoiceMembers = []
+	CurVoiceMembers = {}
 	global DICT_SERVER_CHANNEL
 	print(DICT_SERVER_CHANNEL)
 	while True:
@@ -72,13 +72,13 @@ async def infinite_check():
 			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
 			for ChannelToCheck in DICT_SERVER_CHANNEL[server][0]:
 				voiceMembers = ChannelToCheck.voice_members
-				if  voiceMembers and CurVoiceMembers != voiceMembers:
+				if  voiceMembers and CurVoiceMembers[ChannelToCheck] != voiceMembers:
 					await CLIENT.send_message(ChannelForNotification,
 					content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! :alerte:".format(
 					ChannelToCheck.name, str([x.name for x in ChannelToCheck.voice_members])))
-					CurVoiceMembers = voiceMembers
+					CurVoiceMembers[ChannelToCheck] = voiceMembers
 				elif not voiceMembers:
-					CurVoiceMembers = []
+					CurVoiceMembers[ChannelToCheck] = []
 				else:
 					pass
 		await asyncio.sleep(1)
