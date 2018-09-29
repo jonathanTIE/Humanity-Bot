@@ -46,11 +46,12 @@ Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathan
 		``` """) 
 @CLIENT.event		
 async def on_ready():
-	global CHANNEL_FOR_NOTIF
+	global CHANNEL_FOR_NOTIF,LIST_NOTIF_CHANNEL,LIST_SERVER
+	
 	for x in CLIENT.get_all_channels():
 		for y in LIST_NOTIF_CHANNEL:
 			if str(x) == str(y):
-				LIST_NOTIF_CHANNEL[LIST_NOTIF_CHANNEL.index(y)] = x.id
+				LIST_NOTIF_CHANNEL[LIST_NOTIF_CHANNEL.index(y)] = x
 		if str(x) == str(CHANNEL_FOR_NOTIF):
 			CHANNEL_FOR_NOTIF = x
 	CLIENT.loop.create_task(infinite_check())
@@ -58,20 +59,19 @@ async def on_ready():
 @CLIENT.event
 async def infinite_check():
 	CurVoiceMembers = []
-	print(CLIENT.get_channel(LIST_NOTIF_CHANNEL[0]))
 	while True:
-		for idChannel in LIST_NOTIF_CHANNEL:
-			voiceMembers = CLIENT.get_channel(idChannel).voice_members
+		for Channel in LIST_NOTIF_CHANNEL:
+			voiceMembers = Channel.voice_members
 			if  voiceMembers and CurVoiceMembers != voiceMembers:
-				CurChannel = CLIENT.get_channel(idChannel)
 				await CLIENT.send_message(CHANNEL_FOR_NOTIF,
 				content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! :alerte:".format(
-				CurChannel.name, str([x.name for x in CurChannel.voice_members])))
+				Channel.name, str([x.name for x in Channel.voice_members])))
 				CurVoiceMembers = voiceMembers
 			elif not voiceMembers:
 				CurVoiceMembers = []
 			else:
-				pass
+				print(Channel.voice_members)
 		await asyncio.sleep(1)
+		
 		
 CLIENT.run(TOKEN)
