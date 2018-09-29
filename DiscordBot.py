@@ -15,7 +15,7 @@ CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
 LIST_NOTIF_CHANNEL = [x for x in os.environ.get('LIST_CHECKING_CHANNEL').split("|")]
 CHANNEL_FOR_NOTIF = os.environ.get('NOTIFICATION_CHANNEL')
-DICT_CHANNEL_NOTIF = {}
+DICT_SERVER_CHANNEL = {} #Format : {server:[[ChannelsToCheck], Channel_For_Notif]}
 
 @CLIENT.event
 async def on_message(message):
@@ -47,27 +47,28 @@ Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathan
 		``` """) 
 @CLIENT.event		
 async def on_ready():
-	global CHANNEL_FOR_NOTIF,LIST_NOTIF_CHANNEL,DICT_CHANNEL_NOTIF	
+	global CHANNEL_FOR_NOTIF,LIST_NOTIF_CHANNEL,DICT_SERVER_CHANNEL
 	curCheck = []
 	curForNotif = None
-	for x in CLIENT.get_all_channels():
-		if str(x) == CHANNEL_FOR_NOTIF:
-			curForNotif = x
-		else:
-			for y in LIST_NOTIF_CHANNEL:
-				if str(y) == str(x):
-					curCheck.append(x)		
-	DICT_CHANNEL_NOTIF[x] = curCheck
+	for server in CLIENT.servers:
+		for x in CLIENT.get_all_channels():
+			if str(x) == CHANNEL_FOR_NOTIF:
+				curForNotif = x
+			else:
+				for y in LIST_NOTIF_CHANNEL:
+					if str(y) == str(x):
+						curCheck.append(x)		
+	DICT_SERVER_CHANNEL[server] = [curCheck,curForNotif]
 	CLIENT.loop.create_task(infinite_check())
 				
 @CLIENT.event
 async def infinite_check():
 	CurVoiceMembers = []
-	global DICT_CHANNEL_NOTIF
-	print(DICT_CHANNEL_NOTIF)
+	global DICT_SERVER_CHANNEL
 	while True:
-		for ChannelForNotification in DICT_CHANNEL_NOTIF.keys():
-			for ChannelToCheck in DICT_CHANNEL_NOTIF[ChannelForNotification]:
+		for server in DICT_SERVER_CHANNEL:
+			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
+			for ChannelToCheck in DICT_SERVER_CHANNEL[server][0]:
 				voiceMembers = ChannelToCheck.voice_members
 				if  voiceMembers and CurVoiceMembers != voiceMembers:
 					await CLIENT.send_message(ChannelForNotification,
@@ -79,6 +80,5 @@ async def infinite_check():
 				else:
 					print(ChannelToCheck.voice_members)
 		await asyncio.sleep(1)
-		
 		
 CLIENT.run(TOKEN)
