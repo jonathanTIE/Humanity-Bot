@@ -66,15 +66,20 @@ async def on_ready():
 async def infinite_check():
 	CurVoiceMembers = {}
 	global DICT_SERVER_CHANNEL
-	print(DICT_SERVER_CHANNEL)
 	while True:
 		for server in DICT_SERVER_CHANNEL:
 			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
 			for ChannelToCheck in DICT_SERVER_CHANNEL[server][0]:
+				try:
+					CurVoiceMembers[ChannelToCheck]
+				except KeyError:
+					CurVoiceMembers[ChannelToCheck] = []
 				voiceMembers = ChannelToCheck.voice_members
-				if  voiceMembers and CurVoiceMembers[ChannelToCheck] != voiceMembers:
+				print(voiceMembers)
+				print(CurVoiceMembers[ChannelToCheck])
+				if voiceMembers and CurVoiceMembers[ChannelToCheck] != voiceMembers:
 					await CLIENT.send_message(ChannelForNotification,
-					content="<:alerte:459763877949734924> Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here <:alerte:459763877949734924>".format(
+					content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
 					ChannelToCheck.name, str([x.name for x in ChannelToCheck.voice_members])))
 					CurVoiceMembers[ChannelToCheck] = voiceMembers
 				elif not voiceMembers:
