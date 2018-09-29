@@ -59,7 +59,6 @@ async def on_ready():
 				for y in LIST_NOTIF_CHANNEL:
 					if str(y) == str(x):
 						curCheck.append(x)
-						print("Updated list of channel to listen to")
 		DICT_SERVER_CHANNEL[server] = [curCheck,curForNotif]
 	CLIENT.loop.create_task(infinite_check())
 				
