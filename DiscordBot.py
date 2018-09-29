@@ -57,6 +57,8 @@ async def on_ready():
 				curForNotif = x
 			else:
 				for y in LIST_NOTIF_CHANNEL:
+					print(str(y))
+					print(str(x))
 					if str(y) == str(x):
 						curCheck.append(x)		
 		DICT_SERVER_CHANNEL[server] = [curCheck,curForNotif]
