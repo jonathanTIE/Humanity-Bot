@@ -15,6 +15,7 @@ CLIENT = discord.Client()
 pattern_pic = r"!(HMT|hmt) .[^ ]* .[^ ]* .[^ ]*" #Format demandé : commande,couleur,background,pseudo
 LIST_NOTIF_CHANNEL = [x for x in os.environ.get('LIST_CHECKING_CHANNEL').split("|")]
 CHANNEL_FOR_NOTIF = os.environ.get('NOTIFICATION_CHANNEL')
+DICT_CHANNEL_NOTIF = {}
 
 @CLIENT.event
 async def on_message(message):
@@ -46,31 +47,36 @@ Pour d'autres questions : essaiyez de joindre le staff(de préférance @jonathan
 		``` """) 
 @CLIENT.event		
 async def on_ready():
-	global CHANNEL_FOR_NOTIF,LIST_NOTIF_CHANNEL,LIST_SERVER
-	
+	global CHANNEL_FOR_NOTIF,LIST_NOTIF_CHANNEL,DICT_CHANNEL_NOTIF	
+	curCheck = []
+	curForNotif = None
 	for x in CLIENT.get_all_channels():
-		for y in LIST_NOTIF_CHANNEL:
-			if str(x) == str(y):
-				LIST_NOTIF_CHANNEL[LIST_NOTIF_CHANNEL.index(y)] = x
-		if str(x) == str(CHANNEL_FOR_NOTIF):
-			CHANNEL_FOR_NOTIF = x
+		if str(x) == CHANNEL_FOR_NOTIF:
+			curForNotif = x
+		else:
+			for y in LIST_NOTIF_CHANNEL:
+				if str(y) == str(x):
+					curCheck.append(x)		
+	DICT_CHANNEL_NOTIF[x] = curCheck
 	CLIENT.loop.create_task(infinite_check())
 				
 @CLIENT.event
 async def infinite_check():
 	CurVoiceMembers = []
+	global DICT_CHANNEL_NOTIF
 	while True:
-		for Channel in LIST_NOTIF_CHANNEL:
-			voiceMembers = Channel.voice_members
-			if  voiceMembers and CurVoiceMembers != voiceMembers:
-				await CLIENT.send_message(CHANNEL_FOR_NOTIF,
-				content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! :alerte:".format(
-				Channel.name, str([x.name for x in Channel.voice_members])))
-				CurVoiceMembers = voiceMembers
-			elif not voiceMembers:
-				CurVoiceMembers = []
-			else:
-				print(Channel.voice_members)
+		for ChannelForNotification in DICT_CHANNEL_NOTIF.keys():
+			for ChannelToCheck in DICT_CHANNEL_NOTIF[ChannelForNotification]:
+				voiceMembers = ChannelToCheck.voice_members
+				if  voiceMembers and CurVoiceMembers != voiceMembers:
+					await CLIENT.send_message(ChannelForNotification,
+					content=":alerte: Quelqu'un s'est connecté sur le channel {0}! {1} est/sont présent(s) ! @here :alerte:".format(
+					ChannelToCheck.name, str([x.name for x in ChannelToCheck.voice_members])))
+					CurVoiceMembers = voiceMembers
+				elif not voiceMembers:
+					CurVoiceMembers = []
+				else:
+					print(ChannelToCheck.voice_members)
 		await asyncio.sleep(1)
 		
 		
