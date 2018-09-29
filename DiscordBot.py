@@ -53,12 +53,10 @@ async def on_ready():
 	for server in CLIENT.servers:
 		curCheck = []
 		for x in server.channels:
-			print(str(x))
 			if str(x) == CHANNEL_FOR_NOTIF:
 				curForNotif = x
 			else:
 				for y in LIST_NOTIF_CHANNEL:
-					print(y)
 					if str(y) == str(x):
 						curCheck.append(x)
 						print("Updated list of channel to listen to")
