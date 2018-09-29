@@ -54,7 +54,7 @@ async def on_ready():
 		curCheck = []
 		for x in server.channels:
 			print(str(x))
-			print(CHANNEL_FOR_NOTIF)
+			print(LIST_NOTIF_CHANNEL)
 			if str(x) == CHANNEL_FOR_NOTIF:
 				curForNotif = x
 			else:
