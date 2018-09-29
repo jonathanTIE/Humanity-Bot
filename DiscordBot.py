@@ -51,6 +51,7 @@ async def on_ready():
 	curCheck = []
 	curForNotif = None
 	for server in CLIENT.servers:
+		curCheck = []
 		for x in server.channels:
 			if str(x) == CHANNEL_FOR_NOTIF:
 				curForNotif = x
@@ -65,10 +66,6 @@ async def on_ready():
 async def infinite_check():
 	CurVoiceMembers = []
 	global DICT_SERVER_CHANNEL
-	print(DICT_SERVER_CHANNEL)
-	for x in DICT_SERVER_CHANNEL:
-		print(DICT_SERVER_CHANNEL[x][0][0].name)
-		print(DICT_SERVER_CHANNEL[x][1].name)
 	while True:
 		for server in DICT_SERVER_CHANNEL:
 			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
