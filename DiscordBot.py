@@ -64,6 +64,7 @@ async def on_ready():
 async def infinite_check():
 	CurVoiceMembers = []
 	global DICT_CHANNEL_NOTIF
+	print(DICT_CHANNEL_NOTIF)
 	while True:
 		for ChannelForNotification in DICT_CHANNEL_NOTIF.keys():
 			for ChannelToCheck in DICT_CHANNEL_NOTIF[ChannelForNotification]:
