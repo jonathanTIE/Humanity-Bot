@@ -65,6 +65,9 @@ async def on_ready():
 async def infinite_check():
 	CurVoiceMembers = []
 	global DICT_SERVER_CHANNEL
+	print(DICT_SERVER_CHANNEL)
+	for server in DICT_SERVER_CHANNEL:
+		print(server.name)
 	while True:
 		for server in DICT_SERVER_CHANNEL:
 			ChannelForNotification = DICT_SERVER_CHANNEL[server][1]
@@ -78,7 +81,7 @@ async def infinite_check():
 				elif not voiceMembers:
 					CurVoiceMembers = []
 				else:
-					print(ChannelToCheck.voice_members)
+					pass
 		await asyncio.sleep(1)
 		
 CLIENT.run(TOKEN)
